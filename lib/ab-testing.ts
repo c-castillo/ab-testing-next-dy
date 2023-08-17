@@ -49,25 +49,7 @@ export async function choose(apiKey: string, dyContext: object, buckets: readonl
   return variationTitle
 }
 
-function flattenCampaignData(res: any, choice: any) {
-  let data = null;
-  if (choice.variations.length > 0) {
-    switch (choice.type) {
-      case 'DECISION':
-        data = { decisionId: choice.decisionId, ...choice.variations[0].payload.data };
-        break;
-      case 'RECS_DECISION':
-        data = choice.variations[0].payload.data.slots.map(
-          (slot: { productData: any; sku: any; slotId: any }) => ({ ...slot.productData, sku: slot.sku, slotId: slot.slotId }));
-        break;
-      default:
-        throw new Error('Unknown choice type: ' + choice.type);
-    }
-  }
 
-  res[choice.name] = data;
-  return res;
-}
 
 
 

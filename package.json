@@ -1,6 +1,6 @@
 {
-  "name": "ab-testing-simple",
-  "repository": "https://github.com/vercel/examples.git",
+  "name": "ab-testing-next-dy",
+  "repository": "https://github.com/c-castillo/ab-testing-next-dy",
   "license": "MIT",
   "private": true,
   "scripts": {
