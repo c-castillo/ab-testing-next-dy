@@ -12,10 +12,7 @@ export default function Index() {
       </Text>
       <List>
         <li>
-          <Link href="/home">/home</Link>
-        </li>
-        <li>
-          <Link href="/marketing">/marketing</Link>
+          <Link href="/abtesting">A/B Testing</Link>
         </li>
       </List>
     </Page>

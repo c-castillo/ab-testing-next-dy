@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router'
+
 import Cookies from 'js-cookie'
 import { Layout, Page, Text, Button } from '@vercel/examples-ui'
 import { MARKETING_BUCKETS } from '@lib/buckets'
+import * as emoji from 'node-emoji'
+
 
 export default function Marketing() {
   const router = useRouter()
@@ -14,14 +17,14 @@ export default function Marketing() {
     router.reload()
   }
   const bucket = router.query.bucket as string
-
+  
   return (
     <Page>
       <Text variant="h2" className="mb-6">
         Marketing page variant
       </Text>
       <Text className="text-lg mb-4">
-        You&apos;re currently on <b>bucket {bucket.toUpperCase()}</b>
+        You&apos;re currently on <b>bucket {bucket.toUpperCase()}</b>{emoji.get(bucket.toLowerCase())}
       </Text>
       <Text className="mb-4">
         You can use the buttons below to change your assigned bucket and refresh

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getBucket } from '@lib/ab-testing'
-import { HOME_BUCKETS, MARKETING_BUCKETS } from '@lib/buckets'
+import { choose } from '@lib/ab-testing'
+import { MARKETING_BUCKETS } from '@lib/buckets'
 
 type Route = {
   page: string
@@ -9,25 +9,21 @@ type Route = {
 }
 
 const ROUTES: Record<string, Route | undefined> = {
-  '/home': {
-    page: '/home',
-    cookie: 'bucket-home',
-    buckets: HOME_BUCKETS,
-  },
-  '/marketing': {
-    page: '/marketing',
+  '/abtesting': {
+    page: '/abtesting',
     cookie: 'bucket-marketing',
     buckets: MARKETING_BUCKETS,
   },
 }
 
 export const config = {
-  matcher: ['/home', '/marketing'],
+  matcher: ['/home', '/abtesting'],
 }
 
-export default function middleware(req: NextRequest) {
+export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
   const route = ROUTES[pathname]
+  const APIKEY = process.env.NEXT_PUBLIC_DY_API_KEY || '';
 
   if (!route) return
 
@@ -35,13 +31,25 @@ export default function middleware(req: NextRequest) {
   let bucket = req.cookies.get(route.cookie)?.value
   let hasBucket = !!bucket
 
-  // If there's no active bucket in cookies or its value is invalid, get a new one
+  const dyContext = {
+    page: {
+      location: req.url,
+      referrer: req.referrer,
+      data: [],
+      type: 'HOMEPAGE'
+    },
+    device: {
+      userAgent: req.headers.get('user-agent') || '',
+      ip: req.ip,
+    },
+  }
+
   if (!bucket || !route.buckets.includes(bucket as any)) {
-    bucket = getBucket(route.buckets)
+    bucket = await choose(APIKEY, dyContext, route.buckets)
     hasBucket = false
   }
 
-  // Create a rewrite to the page matching the bucket
+  // Create a rewrite to the page matching th bucket
   const url = req.nextUrl.clone()
   url.pathname = `${route.page}/${bucket}`
   const res = NextResponse.rewrite(url)
