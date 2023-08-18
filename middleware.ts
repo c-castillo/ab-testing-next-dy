@@ -23,7 +23,9 @@ export const config = {
 export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
   const route = ROUTES[pathname]
-  const APIKEY = process.env.NEXT_PUBLIC_DY_API_KEY || '';
+  const apiKey = process.env.NEXT_PUBLIC_DY_API_KEY || '';
+  const selectors = ['${process.env.NEXT_PUBLIC_SELECTOR}'] || [''];
+
 
   if (!route) return
 
@@ -45,7 +47,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (!bucket || !route.buckets.includes(bucket as any)) {
-    bucket = await choose(APIKEY, dyContext, route.buckets)
+    bucket = await choose(apiKey, dyContext, selectors)
     hasBucket = false
   }
 

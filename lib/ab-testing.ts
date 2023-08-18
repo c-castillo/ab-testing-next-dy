@@ -20,7 +20,7 @@ function cryptoRandom() {
 
 const DYHOST = 'https://dy-api.com';
 
-export async function choose(apiKey: string, dyContext: object, buckets: readonly string[]) {
+export async function choose(apiKey: string, dyContext: object, selectors: readonly string[]) {
 
   const options = {
     method: 'POST',
@@ -30,7 +30,7 @@ export async function choose(apiKey: string, dyContext: object, buckets: readonl
     },
     body: {
       selector: {
-        names: ['Lemonade PoC'],
+        names: selectors,
       },
       context: dyContext,
     },
