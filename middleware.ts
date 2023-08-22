@@ -24,7 +24,7 @@ export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
   const route = ROUTES[pathname]
   const apiKey = process.env.NEXT_PUBLIC_DY_API_KEY || '';
-  const selectors = ['${process.env.NEXT_PUBLIC_SELECTOR}'] || [''];
+  const selectors = [`${process.env.NEXT_PUBLIC_SELECTOR}`] || [''];
 
 
   if (!route) return

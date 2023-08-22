@@ -7,8 +7,7 @@ useCase:
   - Edge Middleware
   - Documentation
 css: Tailwind
-deployUrl: https://vercel.com/new/clone?repository-url=https://github.com/vercel/examples/tree/main/edge-middleware/ab-testing-simple&project-name=ab-testing-simple&repository-name=ab-testing-simple
-demoUrl: https://edge-functions-ab-testing-simple.vercel.app
+demoUrl: https://edge-middleware-ab-testing-simple-beta.vercel.app
 relatedTemplates:
   - ab-testing-google-optimize
   - ab-testing-statsig
@@ -20,7 +19,7 @@ By A/B testing at the edge, you'll reduce layout shift from client-loaded experi
 
 ## Demo
 
-https://edge-functions-ab-testing-simple.vercel.app
+https://edge-middleware-ab-testing-simple-beta.vercel.app
 
 Since the different variants are generated statically at the edge, it mitigates any potential layout shift that could happen when a variant is inserted into the DOM client side, hence improving your site's performance.
 
